@@ -34,6 +34,16 @@ module Observers
       def count
         Keys[key].observers.count
       end
+
+      # The observers in order, so a list can be made from them, like [MyLogger, *observers].
+      def to_a
+        Keys[key].observers.dup
+      end
+
+      # Puts the observers in a new order, like replace([MyLogger, *observers]), keeping each one's action.
+      def replace(objects)
+        Keys[key].replace(objects:)
+      end
     end.new(key)
   end
 

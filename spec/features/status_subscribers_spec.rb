@@ -3,7 +3,7 @@
 require 'lowtype'
 
 require_relative '../../lib/observers'
-require_relative '../fixtures/lowevent'
+require_relative '../fixtures/low_event'
 require_relative '../fixtures/status_publisher'
 require_relative '../fixtures/status_subscriber'
 

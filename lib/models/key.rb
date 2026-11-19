@@ -17,6 +17,11 @@ module Observers
       @observers << Observer.new(object:, action:)
     end
 
+    # The observers in a new order. Each is an observer already, which keeps its action, or an object to observe.
+    def replace(objects:)
+      @observers = objects.map { |object| object.is_a?(Observer) ? object : Observer.new(object:, action: nil) }
+    end
+
     # @returns: The result of the last observer with a non-nil value.
     def trigger(action: nil, event: nil)
       # TODO: Breaks some tests... should it? Yes. Should it be disabled when testing? Yes.
