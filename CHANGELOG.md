@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Minor features that don't break backwards compatibility are released as patches.
 
 
-## Unreleased
+## 1.1.1
 
 ### Added
 
@@ -16,6 +16,7 @@ Minor features that don't break backwards compatibility are released as patches.
 ### Fixed
 
 - Two specs required their fixture by an old name
+
 ## 1.1.0
 
 ### Added
