@@ -11,6 +11,7 @@ Minor features that don't break backwards compatibility are released as patches.
 ### Added
 
 - `to_a` and `replace` on the observers `define` gives, to put them in a new order, like `[MyLogger, *observers]`
+- A return action for `take`, like `take(action: :request, returning: :response)`, which gives each observer it passed the result on its way back out
 
 ### Fixed
 

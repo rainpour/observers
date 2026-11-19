@@ -149,6 +149,21 @@ observers.push(my_observer, action: :overridden_action)
 - `trigger` - Calls all observers. Returns the last non-nil value.
 - `take` - Calls all observers up until the first non-nil value. Returns the first non-nil value.
 
+### Return actions
+
+A `take` is push and pull: observers are called in order until one returns a value, which goes back to the caller. Give `take` a return action and each observer it passed is given that value on its way back out, last first, when it has that action:
+```ruby
+class Guard
+  def request(event:) = nil # Lets the request through.
+  def response(event:, result:) = result << ' checked'
+end
+
+publisher.observers.replace([Guard.new, *publisher.observers])
+publisher.take(action: :request, returning: :response)
+```
+
+The return action is called with `event:` and `result:`, the value the take returns, which may be nil. An observer pushed with its own action still gets the return action.
+
 ## Config
 
 Copy and paste the following and change the defaults to configure Observers:

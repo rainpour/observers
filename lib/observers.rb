@@ -60,8 +60,8 @@ module Observers
     Keys[key].trigger(action:, event:)
   end
 
-  def take(key: self, action: nil, event: nil)
-    Keys[key].take(action:, event:)
+  def take(key: self, action: nil, event: nil, returning: nil)
+    Keys[key].take(action:, event:, returning:)
   end
 
   # TODO: Provide a "pipe/port/take" method that uses ractors to be concurrent... if supplied with immutable Data?

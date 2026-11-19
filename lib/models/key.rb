@@ -39,18 +39,23 @@ module Observers
     end
 
     # @returns: The result of the first observer and the first action with a non-nil value.
-    def take(action: nil, event: nil)
+    # With "returning: :action", each observer the take passed, last first, is then given that result on its way back
+    # out, with "action(event:, result:)", when it has that action.
+    def take(action: nil, event: nil, returning: nil)
       # TODO: Breaks some tests... should it? Yes. Should it be disabled when testing? Yes.
       # raise NoObserversError, "No observers configured for #{@key}" if @observers.empty?
 
+      passed = []
+      result = nil
       per_observer_per_action(action:, event:) do |observer, action|
+        passed |= [observer]
         result = observer.trigger(action:, event:)
         yield if block_given?
-        return result unless result.nil?
+        break unless result.nil?
       end
 
-      # None of the observers returned a non-nil value.
-      nil
+      passed.reverse_each { |observer| observer.pass_back(action: returning, event:, result:) } if returning
+      result
     end
 
     private

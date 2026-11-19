@@ -27,5 +27,15 @@ module Observers
       # "RequestEvent -> Rain::Router#route_request -> StatusEvent -> Error404Node.render -> unknown keyword: :props"
       raise ObserverError.new(e.message, object:, event:, action:, previous_error: e)
     end
+
+    # Gives the object a take's result on its way back out. The observer's own action doesn't apply, as it's for the
+    # way in.
+    def pass_back(action:, event:, result:)
+      return unless @object.respond_to?(action)
+
+      @object.send(action, event:, result:)
+    rescue StandardError => e
+      raise ObserverError.new(e.message, object:, event:, action:, previous_error: e)
+    end
   end
 end
