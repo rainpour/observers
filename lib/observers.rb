@@ -32,12 +32,12 @@ module Observers
       alias :<< :push
 
       def count
-        Keys[key].observers.count
+        Keys.find(key)&.observers&.count || 0
       end
 
       # The observers in order, so a list can be made from them, like [MyLogger, *observers].
       def to_a
-        Keys[key].observers.dup
+        Keys.find(key)&.observers.dup || []
       end
 
       # Puts the observers in a new order, like replace([MyLogger, *observers]), keeping each one's action.
@@ -56,12 +56,14 @@ module Observers
     key_actions.each { |each_key, each_action| Keys[each_key].observe(object: self, action: each_action) }
   end
 
+  # Nothing happens for a key that nothing observes, and the key isn't kept, so an object that triggers on itself, like
+  # an event, can still be let go.
   def trigger(key: self, action: nil, event: nil)
-    Keys[key].trigger(action:, event:)
+    Keys.find(key)&.trigger(action:, event:)
   end
 
   def take(key: self, action: nil, event: nil, returning: nil)
-    Keys[key].take(action:, event:, returning:)
+    Keys.find(key)&.take(action:, event:, returning:)
   end
 
   # TODO: Provide a "pipe/port/take" method that uses ractors to be concurrent... if supplied with immutable Data?

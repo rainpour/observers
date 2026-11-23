@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Minor features that don't break backwards compatibility are released as patches.
 
+## Unreleased
+
+### Fixed
+
+- Triggering or taking a key that nothing observes no longer keeps the key, or its object, forever. Each object that triggered on itself was kept, like every request's event tree in Raindeer, so memory grew with every request
+
 
 ## 1.1.1
 
