@@ -11,6 +11,12 @@ module Observers
       Keys[key].observers
     end
 
+    # The observers of every key the block picks with each object once. Like every interval's for an event observed by
+    # many keys.
+    def of_keys
+      Keys.keys.to_a.flat_map { |key, observed| yield(key) ? observed.observers : [] }.uniq(&:object)
+    end
+
     def included(klass)
       klass.extend Observers
     end

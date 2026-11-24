@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Minor features that don't break backwards compatibility are released as patches.
 
+## 1.1.3
+
+### Added
+
+- `Observers.of_keys { |key| ... }` lists the observers of every key the block picks with each object once. An event observed by many keys like every interval can list who observes it
+
 ## 1.1.2
 
 ### Fixed
