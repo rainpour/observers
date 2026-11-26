@@ -9,6 +9,7 @@ module Observers
     def initialize(object:, action:)
       @object = object
       @action = action
+      @takes_event = {}
     end
 
     def trigger(action:, event:)
@@ -16,8 +17,7 @@ module Observers
 
       return unless @object.respond_to?(action)
 
-      # Assumption that if method has params then that param is "event:".
-      if event && @object.method(action).parameters.count > 0
+      if event && takes_event?(action)
         @object.send(action, **{ event: })
       else
         @object.send(action)
@@ -36,6 +36,14 @@ module Observers
       @object.send(action, event:, result:)
     rescue StandardError => e
       raise ObserverError.new(e.message, object:, event:, action:, previous_error: e)
+    end
+
+    private
+
+    # Assumes that if the method has params then that param is "event:". Looked up on the first trigger rather than on
+    # every one, as Object#method makes a new Method each time, and by then gems like LowType have redefined methods.
+    def takes_event?(action)
+      @takes_event.fetch(action) { @takes_event[action] = @object.method(action).parameters.any? }
     end
   end
 end

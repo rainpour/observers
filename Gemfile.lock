@@ -1,7 +1,7 @@
 PATH
   remote: ../lowtype
   specs:
-    lowtype (1.7.0)
+    lowtype (1.7.1)
       dirload
       expressions (~> 0.1)
       lowkey (>= 0.7.1)

@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Minor features that don't break backwards compatibility are released as patches.
 
+## Unreleased
+
+### Fixed
+
+- An observer looks up whether its method takes an event once, rather than on every trigger, as `Object#method` makes a new object each time. Every request in Raindeer triggers several observers
+
 ## 1.1.3
 
 ### Added
