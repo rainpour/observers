@@ -18,7 +18,7 @@ module Observers
       return unless @object.respond_to?(action)
 
       if event && takes_event?(action)
-        @object.send(action, **{ event: })
+        @object.send(action, event:)
       else
         @object.send(action)
       end

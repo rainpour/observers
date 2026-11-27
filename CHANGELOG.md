@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Minor features that don't break backwards compatibility are released as patches.
 
+## Unreleased
+
+### Changed
+
+- A take only keeps the observers it passed when it has a return action to give them, and a trigger passes `event:` without making a new hash
+
 ## 1.1.4
 
 ### Fixed

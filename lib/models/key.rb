@@ -45,10 +45,10 @@ module Observers
       # TODO: Breaks some tests... should it? Yes. Should it be disabled when testing? Yes.
       # raise NoObserversError, "No observers configured for #{@key}" if @observers.empty?
 
-      passed = []
+      passed = [] if returning # Only kept to pass the result back to.
       result = nil
       per_observer_per_action(action:, event:) do |observer, action|
-        passed |= [observer]
+        passed << observer if returning && !passed.include?(observer)
         result = observer.trigger(action:, event:)
         yield if block_given?
         break unless result.nil?
